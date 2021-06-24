@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/desktop/Dev/projects/image grabber/workspace/jsoup-1.13.1.jar"/>
+	<classpathentry kind="lib" path="E:/Desktop/WorkStation/Programming/FunnyTools/Crackxator/jsoup-1.13.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -30,8 +30,11 @@ import org.jsoup.select.Elements;
  *
  */
 public class Crackxtor {
-	public static void main(String[] args) throws IOException {
-		String URL = "https://store.line.me/stickershop/product/3065/en";//args[0];
+	private UI ui;
+	
+	public Crackxtor(UI ui) {this.ui = ui;}
+	
+	public void crackxate(String URL) throws IOException {
 		
 		Document doc = Jsoup.connect(URL).get();
 		
@@ -70,7 +73,7 @@ public class Crackxtor {
 		
 		printReciept(URL, counter, destination);
 		
-		System.out.println("Crackxtracted images: " + counter);
+		ui.reportUpdate("Crackxtracted images: " + counter);
 	}
 	
 	
@@ -78,12 +81,12 @@ public class Crackxtor {
 	 * Download one singular image. url to file.
 	 * @param strImageURL
 	 */
-    private static void downloadImage(String strImageURL, String destination, int counter) {
+    private void downloadImage(String strImageURL, String destination, int counter) {
         
         //get file name from image path
         String strImageName = "image" + counter;
         
-        System.out.println("Saving: " + strImageName + ", from: " + strImageURL);
+        ui.reportUpdate("Saving: " + strImageName + ", from: " + strImageURL);
         
         try {
             //open the stream from URL
@@ -112,7 +115,7 @@ public class Crackxtor {
      * output is like "crackxation1, crackxaction2 ... "
      * will check how many crackxation folders exist.
      */
-    private static String createDestinationFolder() {
+    private String createDestinationFolder() {
     	try {
     		String jarLocation = new File(Crackxtor.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
     	
@@ -122,21 +125,21 @@ public class Crackxtor {
     		while(!Files.notExists(destinationFolder)) {
     			folderID++;
     			destinationFolder = Paths.get(jarLocation + "/Crackxation" + folderID);
-        		System.out.println("Path: " + destinationFolder);
+    			ui.reportUpdate("Path: " + destinationFolder);
     		}
     		
     		//Now CREATE!!!!
             Files.createDirectories(destinationFolder);
-    		System.out.println("Destination folder succesfully created: Crackxation" + folderID);
-    		System.out.println("Path: " + destinationFolder);
+            ui.reportUpdate("Destination folder succesfully created: Crackxation" + folderID);
+            ui.reportUpdate("Path: " + destinationFolder);
     		
     		return destinationFolder.toString();
     		
     	} catch (IOException e) {
-    		System.out.println("WARNING: Destination folder creation failure!!!");
+    		ui.reportUpdate("WARNING: Destination folder creation failure!!!");
     		e.printStackTrace();
         } catch (URISyntaxException e) {
-    		System.out.println("WARNING: Destination folder creation failure!!!");
+        	ui.reportUpdate("WARNING: Destination folder creation failure!!!");
     		e.printStackTrace();
         }
     	
