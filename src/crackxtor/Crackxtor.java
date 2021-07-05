@@ -3,6 +3,7 @@ package crackxtor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -117,7 +118,9 @@ public class Crackxtor {
      */
     private String createDestinationFolder() {
     	try {
-    		String jarLocation = new File(Crackxtor.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
+    		CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
+    		File jarFile = new File(codeSource.getLocation().toURI().getPath());
+    		String jarLocation = jarFile.getParentFile().getPath();
     	
     		//find a valid folder name
     		int folderID = 0;
@@ -137,9 +140,11 @@ public class Crackxtor {
     		
     	} catch (IOException e) {
     		ui.reportUpdate("WARNING: Destination folder creation failure!!!");
+        	ui.reportUpdate(e.toString());
     		e.printStackTrace();
         } catch (URISyntaxException e) {
         	ui.reportUpdate("WARNING: Destination folder creation failure!!!");
+        	ui.reportUpdate(e.toString());
     		e.printStackTrace();
         }
     	
